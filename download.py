@@ -1,6 +1,7 @@
 import warnings
 
 import numpy as np
+import os.path
 
 from sklearn.datasets.base import Bunch
 from nilearn.datasets.utils import _get_dataset_dir, _fetch_files
@@ -60,11 +61,11 @@ def fetch_data(n_subjects=30, data_dir=None, url=None, resume=True,
             'participants.tsv',
             url + 'participants.tsv', dict())
 
-    phenotypic = _fetch_files(data_dir, [phenotypic], resume=resume,
+    phenotypic_file = _fetch_files(data_dir, [phenotypic], resume=resume,
                               verbose=verbose)[0]
 
     # Load the csv file
-    phenotypic = np.genfromtxt(phenotypic, names=True, delimiter='\t',
+    phenotypic = np.genfromtxt(phenotypic_file, names=True, delimiter='\t',
                                dtype=None)
 
     # Keep phenotypic information for selected subjects
@@ -92,7 +93,8 @@ def fetch_data(n_subjects=30, data_dir=None, url=None, resume=True,
         resume=resume, verbose=verbose)
 
     return Bunch(func=functionals, confounds=confounds,
-                 phenotypic=phenotypic, description='ds000228')
+                 phenotypic=os.path.join(data_dir, phenotypic_file),
+                 description='ds000228')
 
 
 if __name__ == "__main__":
