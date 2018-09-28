@@ -75,10 +75,10 @@ def fetch_data(n_subjects=30, data_dir=None, url=None, resume=True,
 
     # Download dataset files
 
-    functionals = [
-        'derivatives:fmriprep:sub-pixar%03i:sub-pixar%03i_task-pixar_run-001_swrf_bold.nii.gz' % (i, i)
+    functionals = [urllib.parse.quote(
+        'derivatives:fmriprep:sub-pixar%03i:sub-pixar%03i_task-pixar_run-001_swrf_bold.nii.gz') % (i, i)
         for i in ids]
-    urls = [url + urllib.parse.quote(name) for name in functionals]
+    urls = [url + name for name in functionals]
     functionals = _fetch_files(
         data_dir, zip(functionals, urls, (dict(),) * n_subjects),
         resume=resume, verbose=verbose)
