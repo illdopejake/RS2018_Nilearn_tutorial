@@ -84,8 +84,8 @@ def fetch_data(n_subjects=30, data_dir=None, url=None, resume=True,
         resume=resume, verbose=verbose)
 
     confounds = [
-        'derivatives:fmriprep:sub-pixar%03i:sub-pixar%03i_task-pixar_run-001_ART_and_CompCor_nuisance_regressors.mat'
-        % (i, i)
+        urllib.parse.quote('derivatives:fmriprep:sub-pixar%03i:sub-pixar%03i_task-pixar_run-001_ART_and_CompCor_nuisance_regressors.mat'
+        % (i, i))
         for i in ids]
     confound_urls = [url + name for name in confounds]
 
